@@ -19,7 +19,9 @@
           </thead>
           <tbody>
             <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
+            <!-- ここに <tr> で ToDo の要素を1行づつ繰り返し表示 -->
             <tr v-for="item in todos" v-bind:key="item.id">
+                <!-- 要素の情報 -->
                 <th>{{ item.id }}</th>
                 <td>{{ item.comment }}</td>
                 <td class="state">
@@ -33,7 +35,15 @@
             </tr>
           </tbody>
         </table>
+        v-on:submit.prevent="doAdd"
     <!-- 新規登録フォーム -->
+    <h2>新しい作業の追加</h2>
+<form class="add-form" v-on:submit.prevent="doAdd">
+  <!-- コメント入力フォーム -->
+  コメント <input type="text" ref="comment">
+  <!-- 追加ボタンのモック -->
+  <button type="submit">追加</button>
+</form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="main.js"></script>
