@@ -5,11 +5,22 @@
   <title>Vue.js App</title>
   <link rel="stylesheet" href="main.css">
 </head>
+  
 <body>
   <div id="app">
+    <h1>チュートリアルToDoリスト</h1>
+      <label v-for="label in options">
+        <input type="radio"
+           v-model="current"
+           v-bind:value="label.value">{{ label.label }}
+      </label>
+    
+    <!-- ★STEP12 -->
+    （{{ computedTodos.length }} 件を表示）
+    
+    <!-- ★STEP4 リスト用テーブル -->
       <table>
-          <!-- テーブルヘッダー -->
-          <thead>
+          <thead v-pre>
             <tr>
               <th class="id">ID</th>
               <th class="comment">コメント</th>
@@ -18,32 +29,38 @@
             </tr>
           </thead>
           <tbody>
-            <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
-            <!-- ここに <tr> で ToDo の要素を1行づつ繰り返し表示 -->
-            <tr v-for="item in todos" v-bind:key="item.id">
+            <!-- ★STEP5 ToDo の要素をループ -->
+            <tr
+                v-for="item in computedTodos"
+                v-bind:key="item.id"
+                v-bind:class="{done:item.state}">
                 <!-- 要素の情報 -->
                 <th>{{ item.id }}</th>
                 <td>{{ item.comment }}</td>
                 <td class="state">
-                  <!-- 状態変更ボタンのモック -->
-                  <button>{{ item.state }}</button>
+                  <!-- ★STEP10 状態変更ボタン -->
+                  <button v-on:click="doChangeState(item)">
+                    {{ labels[item.state] }}
+                  </button>
                 </td>
                 <td class="button">
-                  <!-- 削除ボタンのモック -->
-                  <button>削除</button>
+                  <!-- ★STEP10 削除ボタン -->
+                  <button v-on:click.ctrl="doRemove(item)">
+                  削除</button>
                 </td>
             </tr>
           </tbody>
         </table>
-        v-on:submit.prevent="doAdd"
-    <!-- 新規登録フォーム -->
+    <p>※削除ボタンはコントロールキーを押しながらクリックして下さい</p>
+    
+    <!-- ★STEP6 -->
     <h2>新しい作業の追加</h2>
-<form class="add-form" v-on:submit.prevent="doAdd">
-  <!-- コメント入力フォーム -->
-  コメント <input type="text" ref="comment">
-  <!-- 追加ボタンのモック -->
-  <button type="submit">追加</button>
-</form>
+    <form class="add-form" v-on:submit.prevent="doAdd">
+    <!-- コメント入力フォーム -->
+    コメント <input type="text" ref="comment">
+    <!-- 追加ボタンのモック -->
+    <button type="submit">追加</button>
+    <form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="main.js"></script>
